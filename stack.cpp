@@ -47,15 +47,21 @@ T Stack<T>:: pop() {
 
 template <typename T>
 unsigned long Stack<T>::hash_counter_() {
+    #ifndef DISABLE_PROTECTION
     unsigned long hash = 142313;
     for (int i = 0; i < size_; i++)
         hash += (int)pow((i*(int)data_[i]), 4*i) % 9395749;
     return hash;
+    #endif
+    return 0;
 }
 
 template <typename T>
 unsigned long Stack<T>::params_hash_counter_() {
+    #ifndef DISABLE_PROTECTION
     return (10219323+(int)pow(size_, capacity_*32)) % 2748124;
+    #endif
+    return 0;
 }
 
 template <typename T>
@@ -80,6 +86,7 @@ void Stack<T>::OK() {
         Dump();
         exit(BAD_DATA_HASH);
     }
+    #ifndef DISABLE_PROTECTION
     if (data_[0] != (T)CANARY || data_[capacity_+1] != (T)CANARY) {
         state_ = DEAD_DATA_CANARY;
         Dump();
@@ -90,6 +97,7 @@ void Stack<T>::OK() {
         Dump();
         exit(DEAD_STACK_CANARY);
     }
+    #endif
     if (this == nullptr) {
         state_ = STACK_ZERO_POINTER;
         Dump();
