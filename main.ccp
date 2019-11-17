@@ -2,6 +2,8 @@
 #include "stack.h"
 #include "stack.cpp"
 
+#define DISABLE_PROTECTION
+
 int main() {
     Stack <double> s = {};
     s.initialize(4);
